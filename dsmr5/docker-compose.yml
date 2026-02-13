@@ -1,0 +1,19 @@
+services:
+  dsmr5-exporter:
+    build: ../../dsmr5-exporter
+    container_name: dsmr5-exporter
+    restart: unless-stopped
+#    ports:
+#      - "9194:9194"
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+    environment:
+      TZ: "Europe/Amsterdam"
+    # Container is locally build, no need for watchtower scanning
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    networks:
+      - metrics
+
+networks:
+  metrics:
