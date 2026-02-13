@@ -1,0 +1,14 @@
+.idea
+.vscode
+.env
+
+# Ignore persistent data for monitoring stack
+grafana-data/
+prometheus-data/
+
+# Ignore dns configuration, in developing state
+dns/*
+!dns/README.md
+
+# Ignore watchtower token file used for prometheus metrics
+watchtower_token
