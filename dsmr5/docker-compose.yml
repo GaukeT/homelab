@@ -3,8 +3,8 @@ services:
     build: ../../dsmr5-exporter
     container_name: dsmr5-exporter
     restart: unless-stopped
-#    ports:
-#      - "9194:9194"
+    # ports:
+    #   - "9194:9194"
     devices:
       - "/dev/ttyUSB0:/dev/ttyUSB0"
     environment:
