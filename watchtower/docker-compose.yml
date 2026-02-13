@@ -1,0 +1,21 @@
+services:
+  watchtower:
+    image: nickfedor/watchtower:1.14.1
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - WATCHTOWER_MONITOR_ONLY=true
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_SCHEDULE=0 0 6 * * *
+      - WATCHTOWER_NOTIFICATIONS=slack
+      - WATCHTOWER_HTTP_API_METRICS=true
+    env_file:
+      - .env
+    networks:
+      - metrics
+
+networks:
+  metrics:
