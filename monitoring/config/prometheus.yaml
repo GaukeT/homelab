@@ -1,0 +1,37 @@
+global:
+  scrape_interval: 15s  # By default, scrape targets every 15 seconds.
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['node_exporter:9100']
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:9092']
+
+  - job_name: 'watchtower'
+    scrape_interval: 60s
+    metrics_path: /v1/metrics
+    bearer_token_file: watchtower_token
+    static_configs:
+      - targets: ['watchtower:8080']
+
+  - job_name: 'dsmr5-exporter'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['dsmr5-exporter:9194']
+    fallback_scrape_protocol: PrometheusText0.0.4
+
+  - job_name: 'traefik'
+    metrics_path: /metrics
+    scheme: https
+    static_configs:
+      - targets: ['traefik:443']
+    tls_config:
+      insecure_skip_verify: true
