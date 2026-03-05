@@ -1,0 +1,32 @@
+# log:
+#   level: DEBUG  # options: ERROR, WARN, INFO, DEBUG
+#   format: common  # or json
+
+# accessLog: {}
+
+api:
+  dashboard: true
+  insecure: false
+
+entryPoints:
+  websecure:
+    address: ":443"
+
+providers:
+  docker:
+    exposedByDefault: false
+  file:
+    filename: /etc/traefik/dynamic.yml
+    watch: true
+
+metrics:
+  prometheus: {}
+
+certificatesResolvers:
+  duckdns:
+    acme:
+      email: "${ACME_EMAIL}"
+      storage: /letsencrypt/acme.json
+      dnsChallenge:
+        provider: duckdns
+        delayBeforeCheck: 30

@@ -1,0 +1,70 @@
+http:
+  middlewares:
+    cockpit-headers:
+      headers:
+        customResponseHeaders:
+          X-Frame-Options: "SAMEORIGIN"
+
+  routers:
+    adguard:
+      rule: "Host(`adguard.devnord.duckdns.org`)"
+      service: adguard
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+
+    cockpit:
+      rule: "Host(`cockpit.devnord.duckdns.org`)"
+      service: cockpit
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+      middlewares:
+        - cockpit-headers
+
+    router:
+      rule: "Host(`router.devnord.duckdns.org`)"
+      service: router
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+
+    traefik-dashboard:
+      rule: "Host(`traefik.devnord.duckdns.org`)"
+      entryPoints:
+        - websecure
+      service: api@internal
+      tls:
+        certResolver: duckdns
+        domains:
+          - main: "devnord.duckdns.org"
+            sans:
+              - "*.devnord.duckdns.org"
+      # middlewares:
+      #   - auth-dashboard
+
+    metrics:
+      rule: "Path(`/metrics`)"
+      entryPoints:
+        - websecure
+      service: prometheus@internal
+      tls:
+        certResolver: duckdns
+
+  services:
+    adguard:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:8081"
+    cockpit:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:8082"
+    router:
+      loadBalancer:
+        servers:
+          - url: "http://gateway.internal"
+

@@ -12,3 +12,6 @@ dns/*
 
 # Ignore watchtower token file used for prometheus metrics
 watchtower_token
+
+# Ignore ACME certificates storage
+traefik/letsencrypt/
