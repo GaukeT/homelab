@@ -46,14 +46,6 @@ http:
       # middlewares:
       #   - auth-dashboard
 
-    metrics:
-      rule: "Path(`/metrics`)"
-      entryPoints:
-        - websecure
-      service: prometheus@internal
-      tls:
-        certResolver: duckdns
-
   services:
     adguard:
       loadBalancer:

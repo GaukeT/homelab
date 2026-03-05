@@ -30,8 +30,5 @@ scrape_configs:
 
   - job_name: 'traefik'
     metrics_path: /metrics
-    scheme: https
     static_configs:
-      - targets: ['traefik:443']
-    tls_config:
-      insecure_skip_verify: true
+      - targets: ['traefik:9091']

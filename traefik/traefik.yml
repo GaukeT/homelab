@@ -11,6 +11,8 @@ api:
 entryPoints:
   websecure:
     address: ":443"
+  metrics:
+    address: ":9091"
 
 providers:
   docker:
@@ -20,7 +22,8 @@ providers:
     watch: true
 
 metrics:
-  prometheus: {}
+  prometheus: 
+    entryPoint: metrics
 
 certificatesResolvers:
   duckdns:
