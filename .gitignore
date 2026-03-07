@@ -18,6 +18,10 @@ traefik/letsencrypt/
 
 # Ignore logs
 homepage/config/logs/
+homepage/config/custom*
+homepage/config/docker.yaml
+homepage/config/kubernetes.yaml
+homepage/config/proxmox.yaml
 
 # Ignore uptime-kuma data
 uptime-kuma/data/
