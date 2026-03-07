@@ -12,17 +12,20 @@
 - pivpn (WireGuard)
 
 ## Docker services:
+- booklore
 - grafana
-- prometheus 
+- prometheus
 - traefik
 - dsmr5-exporter (p1 smart meter)
 - duckdns
 - watchtower
+- homepage
+- uptime-kuma
 
 ## Metrics + grafana dashboard:
-- prometheus 
+- prometheus
 - node exporter
-- cadvisor 
-- watchtower 
-- dsmr5-exporter 
+- cadvisor
+- watchtower
+- dsmr5-exporter
 - traefik

@@ -1,0 +1,24 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:2.2.0
+    container_name: uptime-kuma
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    # ports:
+    #   - "3001:3001"
+    networks:
+      - traefik_web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_web"
+      - "traefik.http.routers.kuma.rule=Host(`kuma.devnord.duckdns.org`)"
+      - "traefik.http.routers.kuma.entrypoints=websecure"
+      - "traefik.http.routers.kuma.tls=true"
+      - "traefik.http.services.kuma.loadbalancer.server.port=3001"
+
+networks:
+  traefik_web:
+    external: true     
+
+# https://github.com/louislam/uptime-kuma    

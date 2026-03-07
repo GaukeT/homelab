@@ -1,0 +1,50 @@
+services:
+  booklore:
+    image: ghcr.io/booklore-app/booklore:latest
+    container_name: booklore
+    env_file:
+      - .env
+    depends_on:
+      mariadb-booklore:
+        condition: service_started
+    # ports:
+    #   - "6060:6060"
+    volumes:
+      - ./data:/app/data
+      - ./books:/books
+      - ./bookdrop:/bookdrop
+    restart: unless-stopped
+    healthcheck:
+      test: wget -q -O - http://localhost:6060/api/v1/healthcheck
+      interval: 60s
+      retries: 5
+      start_period: 60s
+      timeout: 10s
+    networks:
+      - traefik_web
+      - booklore
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_web"
+      - "traefik.http.routers.booklore.rule=Host(`booklore.devnord.duckdns.org`)"
+      - "traefik.http.routers.booklore.entrypoints=websecure"
+      - "traefik.http.routers.booklore.tls=true"
+      - "traefik.http.services.booklore.loadbalancer.server.port=6060"
+
+  mariadb-booklore:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    container_name: mariadb-booklore
+    env_file:
+      - .env
+    volumes:
+      - ./mariadb/config:/config
+    restart: unless-stopped
+    networks:
+      - booklore
+
+networks:
+  booklore:
+  traefik_web:
+    external: true
+
+

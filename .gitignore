@@ -15,3 +15,15 @@ watchtower_token
 
 # Ignore ACME certificates storage
 traefik/letsencrypt/
+
+# Ignore logs
+homepage/config/logs/
+
+# Ignore uptime-kuma data
+uptime-kuma/data/
+
+# Ignore booklore data and configuration
+booklore/data/
+booklore/books/
+booklore/bookdrop/
+booklore/mariadb/
