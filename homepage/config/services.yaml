@@ -1,0 +1,61 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- Infrastructure:
+    - Traefik:
+        href: https://traefik.devnord.duckdns.org
+        description: Reverse proxy & TLS termination
+        icon: traefik.png
+        widget:
+          type: traefik
+          url: https://traefik.devnord.duckdns.org
+    - AdGuard Home:
+        href: https://adguard.devnord.duckdns.org
+        description: DNS & ad blocking
+        icon: adguard-home.png
+        widget:
+          type: adguard
+          url: https://adguard.devnord.duckdns.org
+          username: "{{HOMEPAGE_VAR_ADGUARD_USER}}"
+          password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+    - Cockpit:
+        href: https://cockpit.devnord.duckdns.org
+        description: System management
+        icon: cockpit.png
+    - Router:
+        href: https://router.devnord.duckdns.org
+        description: Network router admin
+        icon: router.png
+
+- Monitoring:
+    - Grafana:
+        href: https://grafana.devnord.duckdns.org
+        description: Metrics & dashboards
+        icon: grafana.png
+        widget:
+          type: grafana
+          url: https://grafana.devnord.duckdns.org
+          username: "{{HOMEPAGE_VAR_GRAFANA_USER}}"
+          password: "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"
+    - Prometheus:
+        href: https://prometheus.devnord.duckdns.org
+        description: Metrics collection
+        icon: prometheus.png
+        widget:
+          type: prometheus
+          url: https://prometheus.devnord.duckdns.org
+    - Uptime Kuma:
+        href: https://kuma.devnord.duckdns.org
+        description: Uptime monitoring
+        icon: uptime-kuma.png
+        widget:
+          type: uptimekuma
+          url: https://kuma.devnord.duckdns.org
+          slug: homelab
+
+- Media & Books:
+    - Booklore:
+        href: https://booklore.devnord.duckdns.org
+        description: Personal book library
+        icon: booklore.png
