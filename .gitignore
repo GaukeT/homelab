@@ -15,3 +15,16 @@ watchtower_token
 
 # Ignore ACME certificates storage
 traefik/letsencrypt/
+
+# Ignore logs
+homepage/config/logs/
+
+# Ignore uptime-kuma data
+uptime-kuma/data/
+
+# Ignore Vault persistent data
+vault/
+vault/data/
+
+# Ignore proof of concepts
+devnord/

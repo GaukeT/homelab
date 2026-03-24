@@ -22,7 +22,7 @@ providers:
     watch: true
 
 metrics:
-  prometheus: 
+  prometheus:
     entryPoint: metrics
 
 certificatesResolvers:

@@ -7,8 +7,40 @@ http:
 
   routers:
     adguard:
-      rule: "Host(`adguard.devnord.duckdns.org`)"
-      service: adguard
+      rule: "Host(`dns.devnord.duckdns.org`)"
+      service: dns
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+
+    adguard-sync:
+      rule: "Host(`adguard-sync.devnord.duckdns.org`)"
+      service: adguard-sync
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+
+    adguard1:
+      rule: "Host(`adguard1.devnord.duckdns.org`)"
+      service: adguard1
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+
+    adguard2:
+      rule: "Host(`adguard2.devnord.duckdns.org`)"
+      service: adguard2
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+
+    vpn:
+      rule: "Host(`vpn.devnord.duckdns.org`)"
+      service: vpn
       entryPoints:
         - websecure
       tls:
@@ -32,6 +64,30 @@ http:
       tls:
         certResolver: duckdns
 
+    switch:
+      rule: "Host(`switch.devnord.duckdns.org`)"
+      service: switch
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+
+    pve1:
+      rule: "Host(`pve1.devnord.duckdns.org`)"
+      service: "pve1"
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+
+    pve2:
+      rule: "Host(`pve2.devnord.duckdns.org`)"
+      service: "pve2"
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: duckdns
+
     traefik-dashboard:
       rule: "Host(`traefik.devnord.duckdns.org`)"
       entryPoints:
@@ -47,16 +103,50 @@ http:
       #   - auth-dashboard
 
   services:
-    adguard:
-      loadBalancer:
-        servers:
-          - url: "http://host.docker.internal:8081"
     cockpit:
       loadBalancer:
         servers:
-          - url: "http://host.docker.internal:8082"
+          - url: "http://raspberrypi.internal:8082"
     router:
       loadBalancer:
         servers:
           - url: "http://gateway.internal"
+    switch:
+      loadBalancer:
+        servers:
+          - url: "http://switch.internal"
+    pve1:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "https://pve1.internal:8006"
+    pve2:
+      loadBalancer:
+        serversTransport: insecureTransport
+        servers:
+          - url: "https://pve2.internal:8006"
+    vpn:
+      loadBalancer:
+        servers:
+          - url: "http://vpn.internal:10086"
+    dns:
+      loadBalancer:
+        servers:
+          - url: "http://adguard1.internal"
+          - url: "http://adguard2.internal"
+    adguard-sync:
+      loadBalancer:
+        servers:
+          - url: "http://adguard1.internal:8080"
+    adguard1:
+      loadBalancer:
+        servers:
+          - url: "http://adguard1.internal"
+    adguard2:
+      loadBalancer:
+        servers:
+          - url: "http://adguard2.internal"
 
+  serversTransports:
+    insecureTransport:
+      insecureSkipVerify: true
