@@ -1,0 +1,50 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 128Mi
+      path: /data
+      storageClass: local-path
+    certificatesResolvers:
+      letsencrypt:
+        acme:
+          storage: /data/acme.json
+          dnsChallenge:
+            provider: duckdns
+            propagation:
+              delayBeforeChecks: 30
+    ports:
+      web:
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+              permanent: true
+      websecure:
+        http:
+          tls:
+            certResolver: letsencrypt
+            domains:
+              - main: "devnord.duckdns.org"
+                sans:
+                  - "*.devnord.duckdns.org"
+    env:
+      - name: DUCKDNS_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: duckdns-credentials
+            key: token
+      - name: ACME_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: duckdns-credentials
+            key: email
+    additionalArguments:
+      - "--certificatesresolvers.letsencrypt.acme.email=$(ACME_EMAIL)"

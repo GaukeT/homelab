@@ -11,6 +11,13 @@ api:
 entryPoints:
   websecure:
     address: ":443"
+    http:
+      tls:
+        certResolver: duckdns
+        domains:
+          - main: "devnord.duckdns.org"
+            sans:
+              - "*.devnord.duckdns.org"
   metrics:
     address: ":9091"
 

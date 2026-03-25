@@ -21,7 +21,6 @@
 | homepage | agent1 |
 | prometheus | agent1 |
 | grafana | agent1|
-| booklore | agent2 |
 
 **TBD**: argocd, renovate, loki, authentik, Tekton
 
@@ -45,5 +44,6 @@
 
 ## References
 
+- [Proxmox - debian 13 VM](https://community-scripts.org/scripts/debian-13-vm)
 - [K3S requirements](https://docs.k3s.io/installation/requirements)
 - [Intel NUC D54250WYK](https://www.intel.com/content/www/us/en/products/sku/76977/intel-nuc-kit-d54250wyk/specifications.html)
