@@ -1,5 +1,9 @@
 # Initial setup
 
+## K3S Install
+
+follow https://docs.k3s.io/quick-start
+
 On the k3s control plane, simlink the `kubeconfig` to home directory
 ```sh
 ln -s /etc/rancher/k3s/k3s.yaml ~/.kube.config
