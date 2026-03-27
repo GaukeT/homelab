@@ -37,6 +37,9 @@ kubectl create namespace argocd
 
 # v3.3.4
 kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/v3.3.4/manifests/install.yaml
+
+# Get initial admin password, make sure to change it
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
 suggested directory structure:
@@ -45,14 +48,18 @@ homelab/
   proxmox/
     k3s/
       apps/
+        argocd/
+        ...
         homepage/
         monitoring/
         ...
-      namespaces/
       cluster-config/
 ```
 Explanation:
 - k3s/ — All Kubernetes manifests and GitOps configuration.
   - apps/ — Manifests for workloads, organized by app/service.
-  - namespaces/ — Namespace definitions
+    - argocd/ — ArgoCD application manifests
+    - <app>/ — Manifests for the the app
   - cluster-config/ — Cluster-wide resources
+    - argo/ — ArgoCD configuration
+    - traefik/ — Traefik configuration
