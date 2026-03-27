@@ -1,0 +1,140 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: homepage
+data:
+  bookmarks.yaml: |
+    ---
+    - Developer:
+        - Github:
+            - abbr: GH
+              href: https://github.com/
+        - Docker Hub:
+            - abbr: DH
+              href: https://hub.docker.com/
+
+    - Homelab:
+        - Proxmox Helper scripts:
+            - abbr: PHS
+              href: https://community-scripts.org/scripts
+        - DuckDNS:
+            - abbr: DD
+              href: https://www.duckdns.org/
+        - Let's Encrypt:
+            - abbr: LE
+              href: https://letsencrypt.org/
+        - Homepage Docs:
+            - abbr: HP
+              href: https://gethomepage.dev/
+
+  services.yaml: |
+    ---
+    - Infrastructure:
+        - Traefik:
+            href: https://traefik.devnord.duckdns.org
+            description: Reverse proxy & TLS termination
+            icon: traefik.png
+            widget:
+              type: traefik
+              url: https://traefik.devnord.duckdns.org
+        - AdGuard Home (1):
+            href: https://adguard1.devnord.duckdns.org
+            description: DNS & ad blocking
+            icon: adguard-home.png
+            widget:
+              type: adguard
+              url: https://adguard1.devnord.duckdns.org
+              username: "{{HOMEPAGE_VAR_ADGUARD_USER}}"
+              password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+        - AdGuard Home (2):
+            href: https://adguard2.devnord.duckdns.org
+            description: DNS & ad blocking
+            icon: adguard-home.png
+            widget:
+              type: adguard
+              url: https://adguard2.devnord.duckdns.org
+              username: "{{HOMEPAGE_VAR_ADGUARD_USER}}"
+              password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+
+    - Monitoring:
+        - Grafana:
+            href: https://grafana.devnord.duckdns.org
+            description: Metrics & dashboards
+            icon: grafana.png
+            widget:
+              type: grafana
+              url: https://grafana.devnord.duckdns.org
+              username: "{{HOMEPAGE_VAR_GRAFANA_USER}}"
+              password: "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"
+        - Prometheus:
+            href: https://prometheus.devnord.duckdns.org
+            description: Metrics collection
+            icon: prometheus.png
+            widget:
+              type: prometheus
+              url: https://prometheus.devnord.duckdns.org
+        - Uptime Kuma:
+            href: https://kuma.devnord.duckdns.org
+            description: Uptime monitoring
+            icon: uptime-kuma.png
+            widget:
+              type: uptimekuma
+              url: https://kuma.devnord.duckdns.org
+              slug: homelab
+
+    - Links:
+        - Cockpit:
+            href: https://cockpit.devnord.duckdns.org
+            description: System management
+            icon: cockpit.png
+        - Router:
+            href: https://router.devnord.duckdns.org
+            description: Network router admin
+            icon: router.png
+        - Switch:
+            href: https://switch.devnord.duckdns.org
+            description: Network switch admin
+            icon: tp-link.png
+
+  settings.yaml: |
+    ---
+    title: Homelab
+    theme: dark
+    color: slate
+    headerStyle: clean
+    target: _blank
+    favicon: ./favicon/favicon.ico
+
+    pwa:
+      icons:
+        - src: ./favicon/favicon.png
+          sizes: 192x192
+          type: image/png
+        - src: ./favicon/favicon.png
+          sizes: 512x512
+          type: image/png
+
+    layout:
+      Infrastructure:
+        style: row
+        columns: 3
+      Monitoring:
+        style: row
+        columns: 3
+      Links:
+        style: row
+        columns: 3
+
+  widgets.yaml: |
+    ---
+    - resources:
+        cpu: true
+        memory: true
+        disk: /
+        expanded: true
+
+    - search:
+        provider: duckduckgo
+        target: _blank
+

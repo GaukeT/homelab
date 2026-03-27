@@ -35,7 +35,6 @@ TODO: add new services on Proxmox (e.g. AdGuard Home, Unbound, vpn)
 | Service | Status | Description |
 |---------|--------|-------------|
 | **Traefik** | ✅ Running | Reverse proxy & TLS termination |
-| **Homepage** | ✅ Running | Self-hosted dashboard |
 | **Uptime Kuma** | ✅ Running | Service uptime monitoring |
 | **Grafana** | ✅ Running | Metrics visualisation |
 | **Prometheus** | ✅ Running | Metrics collection |
