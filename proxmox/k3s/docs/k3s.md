@@ -14,13 +14,13 @@
 | k3s-agent2 |  NUC2 (Proxmox VM) | Debian 13 | 4 | 8GB | 60GB |
 
 ### Workload (planning)
-| Workload | K3S Agent |
-|--|--|
-| treafik | agent1, agent2 |
-| duckdns (DDNS) | agent1 |
-| homepage | agent1 |
-| prometheus | agent1 |
-| grafana | agent1|
+| Workload        |
+|-----------------|
+| treafik         |
+| duckdns (DDNS)  |
+| homepage        |
+| prometheus      |
+| grafana         |
 
 **TBD**: argocd, renovate, loki, authentik, Tekton
 
@@ -37,8 +37,7 @@
 - Services must be accessible over HTTPS (with wildcard certificate on `*.devnord.duckdns.org`) with DNS-01 challenge
 - At first the K3S agents only have local storage (non shared)
 - At first, will use K3S built-in secrets, later migrate to a deployed secrets manager (e.g. HashiCorp Vault).
-- k3s-agent1 task -> monitoring / tooling
-- k3s-agent2 task -> shared services for whole family to use
+
 
 **TBD**: shared storage expandability to NAS (future plan)
 
