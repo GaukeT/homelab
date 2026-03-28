@@ -1,0 +1,59 @@
+# k3s upgrade Plans – sync-wave 3 (after controller is running)
+# The server plan upgrades control-plane nodes first.
+# The agent plan waits for at least one server node to finish before upgrading agents.
+#
+# By default, Plans track the 'stable' k3s channel (auto-updates to latest stable).
+# To pin to a specific version, replace 'channel' with 'version: v1.x.y+k3s1'.
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: k3s-server
+  namespace: system-upgrade
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  channel: https://update.k3s.io/v1-release/channels/stable
+  concurrency: 1
+  cordon: true
+  nodeSelector:
+    matchExpressions:
+      - key: k3s-upgrade
+        operator: In
+        values:
+          - "true"
+      - key: node-role.kubernetes.io/control-plane
+        operator: In
+        values:
+          - "true"
+  serviceAccountName: system-upgrade
+  upgrade:
+    image: rancher/k3s-upgrade
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: k3s-agent
+  namespace: system-upgrade
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  channel: https://update.k3s.io/v1-release/channels/stable
+  concurrency: 1
+  cordon: true
+  nodeSelector:
+    matchExpressions:
+      - key: k3s-upgrade
+        operator: In
+        values:
+          - "true"
+      - key: node-role.kubernetes.io/control-plane
+        operator: DoesNotExist
+  prepare:
+    args:
+      - prepare
+      - k3s-server
+    image: rancher/k3s-upgrade
+  serviceAccountName: system-upgrade
+  upgrade:
+    image: rancher/k3s-upgrade

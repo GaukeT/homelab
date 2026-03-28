@@ -59,7 +59,7 @@ Explanation:
 - k3s/ — All Kubernetes manifests and GitOps configuration.
   - apps/ — Manifests for workloads, organized by app/service.
     - argocd/ — ArgoCD application manifests
-    - <app>/ — Manifests for the the app
+    - <app>/ — Manifests for the app
   - cluster-config/ — Cluster-wide resources
     - argo/ — ArgoCD configuration
     - traefik/ — Traefik configuration

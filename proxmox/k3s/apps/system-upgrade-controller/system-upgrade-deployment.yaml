@@ -1,0 +1,60 @@
+## https://github.com/rancher/system-upgrade-controller
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: system-upgrade-controller
+  namespace: system-upgrade
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  selector:
+    matchLabels:
+      upgrade.cattle.io/controller: system-upgrade-controller
+  template:
+    metadata:
+      labels:
+        upgrade.cattle.io/controller: system-upgrade-controller
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: In
+                    values:
+                      - "true"
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/etcd
+          operator: Exists
+      serviceAccountName: system-upgrade
+      containers:
+        - name: system-upgrade-controller
+          image: rancher/system-upgrade-controller:v0.19.0
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: default-controller-env
+          env:
+            - name: SYSTEM_UPGRADE_CONTROLLER_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: "metadata.labels['upgrade.cattle.io/controller']"
+            - name: SYSTEM_UPGRADE_CONTROLLER_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+
