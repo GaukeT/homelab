@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sparkyfitness
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    # Helm chart from upstream git repo
+    - repoURL: https://github.com/CodeWithCJ/SparkyFitness
+      targetRevision: main
+      path: helm/chart
+      helm:
+        releaseName: sparkyfitness
+        valueFiles:
+          - $values/proxmox/k3s/apps/sparkyfitness/values.yaml
+    # Values file from this repo (ref anchor for helm valueFiles above)
+    - repoURL: https://github.com/GaukeT/homelab
+      targetRevision: refs/heads/main
+      ref: values
+    # Extra raw manifests: PostgreSQL deployment/service/pvc
+    # (the upstream helm chart has postgresql.enabled but is missing postgres templates)
+    - repoURL: https://github.com/GaukeT/homelab
+      targetRevision: refs/heads/main
+      path: proxmox/k3s/apps/sparkyfitness
+      directory:
+        include: "postgres-*.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sparkyfitness
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      jsonPointers:
+        - /data
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+

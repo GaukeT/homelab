@@ -1,0 +1,41 @@
+config:
+  timezone: "Europe/Amsterdam"
+  frontendUrl: "https://sparkyfitness.devnord.duckdns.org"
+  garmin:
+    enabled: true
+
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+  hosts:
+    - host: sparkyfitness.devnord.duckdns.org
+      paths:
+        - path: /
+          pathType: Prefix
+
+# postgresql.enabled=true tells the chart to point SPARKY_FITNESS_DB_HOST at
+# "sparkyfitness-postgresql" and use the "sparkyfitness" database.
+# NOTE: The upstream chart is missing its postgres templates, so we deploy
+# PostgreSQL ourselves via raw manifests in this directory (postgres-*.yaml),
+# managed by the third ArgoCD source in sparkyfitness-app.yaml.
+# The secret "sparkyfitness-postgres" must be created manually — see postgres-secret.yaml.dist
+postgresql:
+  enabled: true
+  auth:
+    database: sparkyfitness
+    username: sparky
+    # existingSecret tells the chart not to try generating its own postgres secret
+    existingSecret: "sparkyfitness-postgres"
+  persistence:
+    storageClass: "local-path"
+
+server:
+  persistence:
+    backup:
+      storageClass: "local-path"
+    uploads:
+      storageClass: "local-path"
+
