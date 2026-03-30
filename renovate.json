@@ -3,6 +3,9 @@
   "extends": ["config:recommended"],
   "kubernetes": {
     "fileMatch": ["\\.yaml$"]
+  },
+  "argocd": {
+    "fileMatch": ["proxmox/k3s/apps/argocd/.+\\.yaml$"]
   }
 }
 
