@@ -4,17 +4,10 @@ config:
   garmin:
     enabled: true
 
+# Ingress disabled — using a Traefik IngressRoute CRD instead (sparkyfitness-ingressroute.yaml)
+# to be consistent with the rest of the cluster (whoami, argocd, etc.)
 ingress:
-  enabled: true
-  className: "traefik"
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
-  hosts:
-    - host: sparkyfitness.devnord.duckdns.org
-      paths:
-        - path: /
-          pathType: Prefix
+  enabled: false
 
 # postgresql.enabled=true tells the chart to point SPARKY_FITNESS_DB_HOST at
 # "sparkyfitness-postgresql" and use the "sparkyfitness" database.

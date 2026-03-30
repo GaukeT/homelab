@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: sparkyfitness
+  namespace: sparkyfitness
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`sparkyfitness.devnord.duckdns.org`)
+      services:
+        - name: sparkyfitness-frontend
+          port: 80
+  tls:
+    certResolver: letsencrypt
+

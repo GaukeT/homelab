@@ -24,7 +24,7 @@ spec:
       targetRevision: refs/heads/main
       path: proxmox/k3s/apps/sparkyfitness
       directory:
-        include: "postgres-*.yaml"
+        include: "{postgres-*.yaml,sparkyfitness-*.yaml}"
   destination:
     server: https://kubernetes.default.svc
     namespace: sparkyfitness
