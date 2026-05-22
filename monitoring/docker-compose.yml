@@ -65,7 +65,7 @@ services:
       - metrics
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor-arm64:v0.52.1
+    image: gcr.io/cadvisor/cadvisor-arm64:v0.55.1
     container_name: cadvisor
     privileged: true
     command:
