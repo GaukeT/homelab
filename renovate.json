@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended",
+    "group:allNonMajor"
+  ],
+  "labels": ["renovate"],
+  "minimumReleaseAge": "7 days",
   "kubernetes": {
     "fileMatch": ["\\.yaml$"]
   },
@@ -8,4 +13,3 @@
     "fileMatch": ["proxmox/k3s/apps/argocd/.+\\.yaml$"]
   }
 }
-
