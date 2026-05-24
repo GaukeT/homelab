@@ -37,7 +37,7 @@ spec:
       serviceAccountName: system-upgrade
       containers:
         - name: system-upgrade-controller
-          image: rancher/system-upgrade-controller:v0.19.0
+          image: rancher/system-upgrade-controller:v0.19.2
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
