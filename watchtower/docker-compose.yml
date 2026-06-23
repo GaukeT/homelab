@@ -1,6 +1,6 @@
 services:
   watchtower:
-    image: docker.io/nickfedor/watchtower:1.18.0
+    image: docker.io/nickfedor/watchtower:1.18.1
     container_name: watchtower
     restart: unless-stopped
     volumes:
